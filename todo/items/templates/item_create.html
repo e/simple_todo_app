@@ -1,0 +1,14 @@
+<div id="title">TODO List</div>
+<div style="float:right;"><a href="/logout/">Logout</a></div>
+<style>
+table, th, td {
+   border: 1px solid black;
+}
+</style>
+<a href="">Hide completed tasks</a>
+<form action="." method="post">{% csrf_token %}
+<table>
+{{ form.as_table }}
+</table>
+<input type="submit" value="Save">
+</form>
