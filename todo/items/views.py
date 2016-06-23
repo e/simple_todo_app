@@ -57,5 +57,5 @@ class ItemChangeStatusView(DetailView):
         else:
             item.is_done = True
         item.save()
-        return HttpResponseRedirect('/list')
+        return HttpResponseRedirect('/list/')
 
