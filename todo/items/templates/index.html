@@ -1,28 +1,35 @@
-<div id="title">TODO List</div>
+{% extends 'base.html' %}
+{% block content %}
 <div style="float:right;"><a href="/logout/">Logout</a></div>
-<style>
-table, th, td {
-   border: 1px solid black;
-}
-</style>
 <a href="{% url 'item_create' %}">Create new item</a><br>
+<table style="width:100%; border-spacing:0;">
+  <tbody>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th colspan="3" style="text-align:center;">Actions</th>
+    </tr>
+{% for item in items %}
+    <tr>
+      <td>{{ item.item_name }}</td>
+      <td>{{ item.item_desc }}</td>
+      <td>{% if item.is_done %}V{% else %}X{% endif %}</td>
+      <td><a href="{% url 'item_update' item.id %}">Edit</a></td>
+      <td>
+        <a href="{% url 'item_change_status' item.id %}">
+        {% if item.is_done %}
+        Mark as pending
+        {% else %}
+        Mark as done
+        {% endif %}
+        </a>
+      </td>
+      <td><a href="{% url 'item_delete' item.id %}">Delete</a></td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
 <a href="{% url 'index' %}">Show all tasks</a>
 <a href="{% url 'list_pending' %}">Hide completed tasks</a>
-<table>
-{% for item in items %}
-<tr>
-<td>{{ item.item_name }}</td>
-<td>{{ item.item_desc }}</td>
-<td>{% if item.is_done %}V{% else %}X{% endif %}</td>
-<td><a href="{% url 'item_update' item.id %}">Edit</a></td>
-<td><a href="{% url 'item_change_status' item.id %}">
-{% if item.is_done %}
-Mark as pending
-{% else %}
-Mark as done
-{% endif %}
-</a></td>
-<td><a href="{% url 'item_delete' item.id %}">Delete</a></td>
-</tr>
-{% endfor %}
-</table>
+{% endblock %}

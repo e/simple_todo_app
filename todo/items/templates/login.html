@@ -7,8 +7,9 @@
     <h1>Welcome to TODO list!</h1>
     <form action="{% url 'login' %}" method="post">
     {% csrf_token %}
-        {{form.username.label_tag}}{{form.username}}
-        {{form.password.label_tag}}{{form.password}}
+        <table>
+        {{ form.as_table }}
+        </table>
         <input type="submit" id="submit" name="submit" value="Sign in" />
         <input type="hidden" name="next" value="{{ next }}" />        
     </form>
