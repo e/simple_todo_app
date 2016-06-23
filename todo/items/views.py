@@ -8,7 +8,19 @@ from items.forms import ItemForm
 class IndexView(ListView):
     model = Item
     template_name = 'index.html'
-    context_object_name = 'items'
+
+    def get_queryset(self):
+        if self.kwargs.get('pending'):
+            queryset = self.model.objects.filter(is_done=False)
+        else:
+            queryset = self.model.objects.all()
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        if self.kwargs.get('pending'):
+            context['pending'] = True
+        return context
 
 
 class ItemCreateView(CreateView):
@@ -47,13 +59,3 @@ class ItemChangeStatusView(DetailView):
         item.save()
         return HttpResponseRedirect('/list')
 
-
-class ListPendingView(ListView):
-    model = Item
-    template_name = 'index.html'
-    context_object_name = 'items'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data()
-        context['items'] = Item.objects.filter(is_done=False)
-        return context

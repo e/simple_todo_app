@@ -10,7 +10,7 @@
       <th>Status</th>
       <th colspan="3" style="text-align:center;">Actions</th>
     </tr>
-{% for item in items %}
+{% for item in object_list %}
     <tr>
       <td>{{ item.item_name }}</td>
       <td>{{ item.item_desc }}</td>
@@ -30,6 +30,9 @@
 {% endfor %}
 </tbody>
 </table>
+{% if pending %}
 <a href="{% url 'index' %}">Show all tasks</a>
-<a href="{% url 'list_pending' %}">Hide completed tasks</a>
+{% else %}
+<a href="{% url 'list_pending' 'pending' %}">Hide completed tasks</a>
+{% endif %}
 {% endblock %}
